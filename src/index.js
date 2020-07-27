@@ -34,17 +34,49 @@ class Board extends React.Component {
 
   handleClick(i) {
     const squares = this.state.squares.slice();
-    squares[i] = this.state.firstPlayer ? 'X' : 'O';
+    if (this.calculateWinner(this.state.squares) || squares[i]) {
+      return;
+    }
 
+    squares[i] = this.state.firstPlayer ? 'X' : 'O';
     this.setState({
       squares: squares,
       firstPlayer: !this.state.firstPlayer,
     });
+  }
 
+  /**
+   * Calculates a winner
+   *
+   * @param squares array of 9 squares
+   * @return string 'X', 'O' or null
+   */
+  calculateWinner(squares) {
+    const winningIndexes = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+    ];
+
+    for (let i = 0; i < winningIndexes.length; i++) {
+      const [a, b, c] = winningIndexes[i];
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        return squares[a];
+      }
+    }
+
+    return null;
   }
 
   render() {
-    const status = 'Next player: ' + (this.state.firstPlayer ? 'X' : 'O');
+    const winner = this.calculateWinner(this.state.squares);
+
+    const status = winner ? 'Winner: ' + winner : 'Next player: ' + (this.state.firstPlayer ? 'X' : 'O');
 
     return (
         <div>
