@@ -4,6 +4,68 @@ See [React Tutorial](https://reactjs.org/tutorial/tutorial.html) for details.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## How to embed this app into any site
+
+See [this article](https://medium.com/better-programming/how-to-embed-a-react-application-on-any-website-1bee1d15617f) 
+for details.
+
+1. Change the app target div to something unique instead of `root`, e.g. `myJsTutorialRoot`:
+    ```javascript
+    ReactDOM.render(
+        <Game/>,
+        document.getElementById('myJsTutorialRoot')
+    );
+    ```
+1. Add `.` homepage to `package.json`:
+    ```json
+    {
+      "name": "reactjs-tutorial",
+      "version": "0.1.0",
+      "private": true,
+      "homepage": ".",
+      "...": "..."
+    }
+    ```
+1. Build the app: `npm run build`
+1. Create an HTML page:
+    ```html
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+      <title>React App</title>
+    
+      <style>
+        <!-- CSS styles content -->
+      </style>
+    </head>
+    <body>
+    
+      <div id="myJsTutorialRoot"></div>
+      
+      <script type="text/javascript">
+        <!-- runtime-main.(hash).js content -->
+      </script>
+      <script type="text/javascript">
+        <!-- 2.(hash).chunk.js content -->
+      </script>
+      <script type="text/javascript">
+        <!-- main.(hash).chunk.js content -->
+      </script>
+    
+    </body>
+    </html>
+    ``` 
+1. Include CSS styles content into the HTML page
+1. Include the following JS contents into the HTML page (**the order does matter!**):
+    * `build/static/js/runtime-main.(hash).js`
+    * `build/static/js/2.(hash).chunk.js`
+    * `build/static/js/main.(hash).chunk.js`
+1. Embed resulting HTML into the target site
+
+
 ## Available Scripts
 
 In the project directory, you can run:
